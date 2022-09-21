@@ -55,6 +55,17 @@ func main() {
 				filename = strings.Join(strings.Split(filename, " "), "-")
 			}
 
+			//check to make sure directory 'data' exists
+			//if not, create it
+			_, dirErr := os.Stat("data")
+			if errors.Is(dirErr, os.ErrNotExist) {
+				err := os.Mkdir("data", 0755)
+				if err != nil {
+					fmt.Println(err)
+				}
+
+			}
+
 			_, err := os.OpenFile("data/"+filename+".json", os.O_RDONLY, 0644)
 			// check if file exists
 			// if does exist, ask for permission to overwrite
